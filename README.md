@@ -10,17 +10,21 @@ Usage
 Samples
 -------
 generate test.py with all samples included.
+
     python newpy.py test
 
 list all existing samples
+
     python newpy.py -l
 
 generate test.py with sample 1 included only.
+
     python newpy.py test -s1
 
 generate test.py with sample 1 and 3 included as comment.
+
     python newpy.py test -s13 -c
 
 Support
 -------
-email: jackandking@gmail.com
+Email: jackandking@gmail.com
