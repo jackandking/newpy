@@ -7,6 +7,14 @@ Run Environment
 ---------------
 Only tested in Python 2.7 under Windows and Linux.
 
+Install
+-------
+Download newpy.py from GitHub to your local disk. Edit newpy.py with any text editor to overwrite below line with your email or other info as your author name.
+
+    # Configuration Area Start for users of newpy
+    _author_ = 'Yingjie.Liu@thomsonreuters.com'
+    # Configuration Area End
+
 Usage
 -----
     python newpy.py -h
