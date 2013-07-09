@@ -3,6 +3,10 @@ newpy
 
 Quickly python programming for small utilities. It will also enable experieced developers of other script languages to start pythoning in short time without googling. Personally I will use it recall python key syntax when I have stopped pythoning for a while.
 
+Run Environment
+---------------
+Only tested in Python 2.7 under Windows and Linux.
+
 Usage
 -----
     python newpy.py -h
