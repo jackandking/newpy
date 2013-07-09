@@ -6,11 +6,11 @@
 __version__='0.2'
 
 '''Contributors:
-    Yingjie.Liu@thonsomreuters.com
+    Yingjie.Liu@thomsonreuters.com
 '''
 
 # Configuration Area Start for users of newpy
-_author_ = 'Yingjie.Liu@thonsomreuters.com'
+_author_ = 'Yingjie.Liu@thomsonreuters.com'
 # Configuration Area End
 
 from collections import OrderedDict
