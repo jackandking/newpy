@@ -13,7 +13,7 @@ __version__='0.2'
 _author_ = 'Yingjie.Liu@thomsonreuters.com'
 # Configuration Area End
 
-from collections import OrderedDict
+#from collections import OrderedDict
 from datetime import datetime
 from optparse import OptionParser
 import sys,os
@@ -58,7 +58,7 @@ header='''# -*- coding: utf-8 -*-
 # Newpy ID: %s
 '''
 
-sample_blocks = OrderedDict(sorted([
+sample_blocks = dict([
 
     ('0' , 
 ['Hello World',
@@ -131,7 +131,7 @@ if __name__ == '__main__':
     print "hello world!"
 ''']),
 
-]))
+])
 
 def write_sample_to_file(newpy_id=0,
                          id_list=None,
@@ -153,7 +153,7 @@ def write_sample_to_file(newpy_id=0,
 
 def list_sample(option, opt_str, value, parser):
     print "Here are the available samples:"
-    for i in sample_blocks.iterkeys():
+    for i in sorted(sample_blocks.iterkeys()):
         print i,"=>",sample_blocks[i][0]
     sys.exit()
 
