@@ -5,7 +5,7 @@ Quickly python programming for small utilities. It will also enable experieced d
 
 Run Environment
 ---------------
-Only tested in Python 2.7 under Windows and Linux.
+Tested in Python 2.7 under Windows and Linux, Python 2.6 under Linux.
 
 Install
 -------

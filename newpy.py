@@ -3,7 +3,7 @@
 # DateTime: 2013-07-07 16:54:15
 # HomePage: https://github.com/jackandking/newpy
 
-__version__='0.2'
+__version__='0.3'
 
 '''Contributors:
     Yingjie.Liu@thomsonreuters.com
