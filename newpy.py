@@ -63,7 +63,8 @@ sample_blocks = dict([
     ('0' , 
 ['Hello World',
 '''
-print "Hello World!"
+world=raw_input("Hello:")
+print "Hello",world + "!"
 ''']),
 
     ('1' , 
@@ -122,6 +123,16 @@ try:
     print response.read(); 
 except:
     print "Unexpected error:", sys.exc_info()[0]
+''']),
+
+    ('6' , 
+['System Call',
+'''
+import subprocess
+#only care about return value
+print subprocess.call("dir abc.txt", shell=True)
+#Care about output
+print subprocess.check_output("hostname", shell=True)
 ''']),
 
     ('9' , 
