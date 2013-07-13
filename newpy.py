@@ -84,7 +84,7 @@ while not None:
 '''
 list=[1,3,2]
 print list
-dict={'yi':'one','san':'three','er':'two'}
+dict={'yi':'one','san':'three','er':'two','array':['four','five']}
 print dict
 for i in dict.keys(): print dict[i]
 for i in sorted(dict.keys()): print dict[i]
@@ -140,6 +140,21 @@ print subprocess.check_output("hostname", shell=True)
 '''
 if __name__ == '__main__':
     print "hello world!"
+''']),
+
+    ('m' , 
+['MongoDB',
+'''
+from pymongo import MongoClient
+client = MongoClient('localhost', 27017)
+db = client.test_database
+collection = db.test_collection
+post = {"author": "Mike","text": "My first blog post!"}
+posts = db.posts
+post_id = posts.insert(post)
+posts.find_one({"author": "Mike"})
+for post in posts.find():
+    post
 ''']),
 
 ])
