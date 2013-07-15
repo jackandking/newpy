@@ -159,6 +159,20 @@ if __name__ == '__main__':
     print "hello world!"
 ''']),
 
+    ('c' , 
+['Class and SubClass',
+'''
+class Parent:        # define parent class
+   data = 100
+   def __init__(self): print "Calling parent constructor"
+   def __del__(self): print "Parent D'tor: ",self.data,Parent.data
+
+class Child(Parent): # define child class
+   def __init__(self): self.data=2; print "Calling child constructor"
+
+print Child()
+''']),
+
     ('m' , 
 ['MongoDB - NoSQL',
 '''
