@@ -3,7 +3,7 @@
 # DateTime: 2013-07-07 16:54:15
 # HomePage: https://github.com/jackandking/newpy
 
-__version__='0.3'
+__version__='0.4'
 
 '''Contributors:
     Yingjie.Liu@thomsonreuters.com
@@ -88,6 +88,7 @@ dict={'yi':'one','san':'three','er':'two','array':['four','five']}
 print dict
 for i in dict.keys(): print dict[i]
 for i in sorted(dict.keys()): print dict[i]
+print len(dict.keys())
 ''']),
 
     ('3' , 
@@ -135,6 +136,22 @@ print subprocess.call("dir abc.txt", shell=True)
 print subprocess.check_output("hostname", shell=True)
 ''']),
 
+    ('7' , 
+['String Operation',
+'''
+s='abc'+'de'
+print len(s)
+print s[0],s[-1]
+''']),
+
+    ('8' , 
+['eval and exec',
+'''
+a=eval('1+1')
+exec('b=1+1')
+print a,b
+''']),
+
     ('9' , 
 ['Unit Test',
 '''
@@ -143,7 +160,7 @@ if __name__ == '__main__':
 ''']),
 
     ('m' , 
-['MongoDB',
+['MongoDB - NoSQL',
 '''
 from pymongo import MongoClient
 client = MongoClient('localhost', 27017)
@@ -183,11 +200,19 @@ def list_sample(option, opt_str, value, parser):
         print i,"=>",sample_blocks[i][0]
     sys.exit()
 
-def submit_record(what):
-    import urllib
+def submit_record(what,verbose):
+    import urllib,urllib2
     params = urllib.urlencode({'which': __version__, 'where': get_lan_ip(), 'who': _author_, 'what': what})
-    f = urllib.urlopen("http://newxx.sinaapp.com/newpy", params)
-    return f.read().split(None,1)[0]
+    if verbose: sys.stdout.write("apply for newpy ID...")
+    newpyid=0
+    try:
+        f = urllib2.urlopen("http://newxx.sinaapp.com/newpy", params,timeout=1)
+        newpyid=f.read().split(None,1)[0]
+        if verbose: print "ok, got",newpyid
+    except urllib2.URLError, e:
+        if verbose: print "ko, use 0"
+
+    return newpyid
         
 def main():
     usage = "usage: %prog [options] filename"
@@ -204,8 +229,10 @@ def main():
                       action="store_true", dest="overwrite")
     parser.add_option("-t", "--test", help="run in test mode",
                       action="store_true", dest="test")
-    parser.add_option("-r", "--record", help="submit record to improve newpy",
+    parser.add_option("-r", "--record", help="submit record to improve newpy (obsolete, refer to -n)",
                       action="store_true", dest="record")
+    parser.add_option("-n", "--norecord", help="don't submit record to improve newpy",
+                      action="store_false", dest="record", default=True)
     (options, args) = parser.parse_args()
     if len(args) != 1:
         parser.error("incorrect number of arguments, try -h")
@@ -216,7 +243,7 @@ def main():
     verbose=options.verbose
     sample_list=options.sample_list
 
-    if options.record: newpy_id=submit_record(sample_list)
+    if options.record: newpy_id=submit_record(sample_list,verbose)
     else: newpy_id=0
 
     write_sample_to_file(newpy_id=newpy_id,
