@@ -223,7 +223,7 @@ def submit_record(what,verbose):
         f = urllib2.urlopen("http://newxx.sinaapp.com/newpy", params,timeout=1)
         newpyid=f.read().split(None,1)[0]
         if verbose: print "ok, got",newpyid
-    except urllib2.URLError, e:
+    except:
         if verbose: print "ko, use 0"
 
     return newpyid
