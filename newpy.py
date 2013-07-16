@@ -64,6 +64,7 @@ sample_blocks = dict([
 ['Hello World',
 '''
 world=raw_input("Hello:")
+World='python is case sensitive'
 print "Hello",world + "!"
 ''']),
 
@@ -171,6 +172,16 @@ class Child(Parent): # define child class
    def __init__(self): self.data=2; print "Calling child constructor"
 
 print Child()
+''']),
+
+    ('d' , 
+['Dict Deep Copy',
+'''
+import copy
+my_dict = {'a': [1, 2, 3], 'b': [4, 5, 6]}
+my_copy = copy.deepcopy(my_dict)
+my_dict['a'][2] = 7
+print my_copy['a'][2]
 ''']),
 
     ('m' , 
