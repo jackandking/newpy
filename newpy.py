@@ -119,10 +119,17 @@ if m: print m.group(1)
 ['''URLFetch and Exception Handling''',
 '''
 import urllib2,sys
+from urllib2 import URLError, HTTPError
 try:
     response=urllib2.urlopen("www.baidu.com")
     response=urllib2.urlopen("http://www.baidu.com")
     print response.read(); 
+except HTTPError, e:
+    print 'The server couldn\'t fulfill the request.'
+    print 'Error code: ', e.code
+except URLError, e:
+    print 'We failed to reach a server.'
+    print 'Reason: ', e.reason
 except:
     print "Unexpected error:", sys.exc_info()[0]
 ''']),
@@ -182,6 +189,16 @@ my_dict = {'a': [1, 2, 3], 'b': [4, 5, 6]}
 my_copy = copy.deepcopy(my_dict)
 my_dict['a'][2] = 7
 print my_copy['a'][2]
+''']),
+
+    ('i' , 
+['Runtime Import',
+'''
+libname='time'
+globals()[libname] = __import__(libname)
+mod=globals()[libname]
+if hasattr(mod,'sleep'):
+    mod.sleep(1)
 ''']),
 
     ('m' , 
