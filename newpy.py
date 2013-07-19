@@ -191,6 +191,18 @@ my_dict['a'][2] = 7
 print my_copy['a'][2]
 ''']),
 
+    ('f' , 
+['Function and DataTime',
+'''
+from datetime import date
+def isleap(year):
+    """Return True for leap years, False for non-leap years."""
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+thisyear=date.today().year
+print isleap.__doc__
+print "this year is leap year:",isleap(thisyear)
+''']),
+
     ('i' , 
 ['Runtime Import',
 '''
