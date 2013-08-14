@@ -3,7 +3,7 @@
 # DateTime: 2013-07-07 16:54:15
 # HomePage: https://github.com/jackandking/newpy
 
-__version__='0.5'
+__version__='0.6'
 
 '''Contributors:
     Yingjie.Liu@thomsonreuters.com
@@ -13,7 +13,9 @@ __version__='0.5'
 _author_ = 'Yingjie.Liu@thomsonreuters.com'
 # Configuration Area End
 
-#from collections import OrderedDict
+_newpy_server_='newxx.sinaapp.com'
+#_newpy_server_='localhost:8080'
+
 from datetime import datetime
 from optparse import OptionParser
 import sys,os
@@ -83,10 +85,10 @@ while not None:
     ('2' , 
 ['''List and Dict''',
 '''
-list=[1,3,2]
-print list
-dict={'yi':'one','san':'three','er':'two','array':['four','five']}
-print dict
+list=[1,3,2]; print list
+list_of_list=[1,2,[3,4]]; print list_of_list
+list_of_dict=[{"name":"jack", "sex":"M"},{"name":"king","sex":"M"}]; print list_of_dict
+dict={'yi':'one','san':'three','er':'two','array':['four','five']}; print dict
 for i in dict.keys(): print dict[i]
 for i in sorted(dict.keys()): print dict[i]
 print len(dict.keys())
@@ -260,14 +262,41 @@ def submit_record(what,verbose):
     if verbose: sys.stdout.write("apply for newpy ID...")
     newpyid=0
     try:
-        f = urllib2.urlopen("http://newxx.sinaapp.com/newpy", params,timeout=1)
-        newpyid=f.read().split(None,1)[0]
+        f = urllib2.urlopen("http://"+_newpy_server_+"/newpy", params, timeout=1)
+        newpyid=f.read()
         if verbose: print "ok, got",newpyid
     except:
+        print "Unexpected error:", sys.exc_info()[0]
         if verbose: print "ko, use 0"
 
     return newpyid
-        
+ 
+def upload_file(option, opt_str, value, parser):
+    import re
+    filename=value
+    if not os.path.isfile(filename): sys.exit("error: "+filename+" does not exist!")
+    file=open(filename,"r")
+    line=file.readline()
+    newpyid=0
+    while line:
+        line=file.readline()
+        m=re.search('# Newpy ID: (\d+)',line)
+        if m: 
+            newpyid=int(m.group(1))
+            break
+    file.close
+    if newpyid == 0: sys.exit("error: no valid newpy ID found for "+filename)
+    sys.stdout.write("uploading "+filename+"(newpyid="+str(newpyid)+")...")
+    import urllib,urllib2
+    params = urllib.urlencode({'filename': filename, 'content': open(filename,'rb').read()})
+    try:
+        f = urllib2.urlopen("http://"+_newpy_server_+"/newpy/upload", params, timeout=5)
+        print f.read()
+        print "weblink: http://"+_newpy_server_+"/newpy/"+str(newpyid)
+    except:
+        print "Unexpected error:", sys.exc_info()[0]
+    sys.exit()
+
 def main():
     usage = "usage: %prog [options] filename"
     parser = OptionParser(usage)
@@ -275,13 +304,16 @@ def main():
                       help='''select samples to include in the new file,
                       e.g. -s 123, check -l for all ids''',default="")
     parser.add_option("-l", "--list_sample_id", action="callback", callback=list_sample)
+    parser.add_option("-u", "--upload", type="string", dest="filename",
+                      help='''upload file to newpy server as sample to others. the file must have a valid newpy ID.''',
+                      action="callback", callback=upload_file)
     parser.add_option("-c", "--comment", dest="comment",
                       action="store_true", help="add samples with prefix '#'" )
     parser.add_option("-q", "--quiet", help="run in silent mode",
                       action="store_false", dest="verbose", default=True)
     parser.add_option("-o", "--overwrite", help="overwrite existing file",
                       action="store_true", dest="overwrite")
-    parser.add_option("-t", "--test", help="run in test mode",
+    parser.add_option("-t", "--test", help="run in test mode, no file generation, only print result to screen.",
                       action="store_true", dest="test")
     parser.add_option("-r", "--record", help="submit record to improve newpy (obsolete, refer to -n)",
                       action="store_true", dest="record")
