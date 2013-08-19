@@ -1,46 +1,62 @@
-newpy
+newpy.py
 =====
-
-Quickly python programming for small utilities. It will also enable experieced developers of other script languages to start pythoning in short time without googling. Personally I will use it recall python key syntax when I have stopped pythoning for a while.
+Quick Python programming for experienced lazy developers on small utilities. It will enable your switch from other script languages to Python in short time without googling. If you believe that 20% of all Python grammar can support 80% of use as I do, then newpy.py is your good choice. Personally I will use it to recall key syntax when I have stopped using Python for a while. newpy.py will save 10 minutes each time we do language context switch.
 
 Run Environment
 ---------------
 Tested in Python 2.7 under Windows and Linux, Python 2.6 under Linux.
 
-Install
--------
+Python Installation
+-----------------
+Python is so famous that you can easily figure out how to download&install it via google. Otherwise just visit below link to save 10 seconds.
+    http://www.python.org/getit/
+
+Module Management
+-----------------
+Python is powerful only because there are lots of useful modules. They are free for you, so you must learn to download&install modules.
+
+For our sake, Christoph Gohlke prepares Windows installers (.msi) for popular Python packages. He builds installers for Python 2.x and 3.x, 32 bit and 64 bit. You need to
+
+Install setuptools http://www.lfd.uci.edu/~gohlke/pythonlibs/#setuptools <br>
+Install pip http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip
+
+    pip install <module>
+
+
+Install newpy.py
+----------------
 Download newpy.py from GitHub to your local disk. Edit newpy.py with any text editor to overwrite below line with your email or other info as your author name.
 
-    # Configuration Area Start for users of newpy
-    _author_ = 'Yingjie.Liu@thomsonreuters.com'
+    # Configuration Area Start for users of newpy.py
+    _author_ ='Yingjie.Liu@thomsonreuters.com'
     # Configuration Area End
 
 Usage
 -----
-    python newpy.py -h
 
-Samples
+    Python newpy.py -h
+
+Use Cases
 -------
 generate test.py without samples.
 
-    python newpy.py test
+    Python newpy.py test
 
 list all existing samples
 
-    python newpy.py -l
+    Python newpy.py -l
 
 generate test.py with sample 1 included only.
 
-    python newpy.py test -s1
+    Python newpy.py test -s1
 
 generate test.py with sample 1 and 3 included as comment.
 
-    python newpy.py test -s13 -c
+    Python newpy.py test -s13 -c
 
-generate test.py and submit statistical data to newpy database. A global newpy ID will be assigned to your test.py. Your IP address, Author name and Sample Selection will be recorded with -r. Those data will only be used to improve newpy.
-
-    python newpy.py test -r
+By defaule, newpy.py will submit statistical data to global database for new file generation. In such case, a global newpy.py ID will be assigned to your test.py. Your IP address, Author name and Sample Selection will be recorded. Those data will only be used to improve newpy.py. Use -n to disable it.
 
 Support
 -------
-Email: jackandking@gmail.com
+mailto: jackandking@gmail.com
+

@@ -3,7 +3,7 @@
 # DateTime: 2013-07-07 16:54:15
 # HomePage: https://github.com/jackandking/newpy
 
-__version__='0.6'
+__version__='0.7'
 
 '''Contributors:
     Yingjie.Liu@thomsonreuters.com
@@ -117,14 +117,14 @@ m=re.search('(\d+)',line)
 if m: print m.group(1)
 ''']),
 
-    ('5' , 
+    ('7' , 
 ['''URLFetch and Exception Handling''',
 '''
 import urllib2,sys
 from urllib2 import URLError, HTTPError
 try:
-    response=urllib2.urlopen("www.baidu.com")
-    response=urllib2.urlopen("http://www.baidu.com")
+    response=urllib2.urlopen("www.google.com")
+    response=urllib2.urlopen("http://www.google.com")
     print response.read(); 
 except HTTPError, e:
     print 'The server couldn\'t fulfill the request.'
@@ -146,12 +146,14 @@ print subprocess.call("dir abc.txt", shell=True)
 print subprocess.check_output("hostname", shell=True)
 ''']),
 
-    ('7' , 
+    ('5' , 
 ['String Operation',
 '''
-s='abc'+'de'
+s='abc'+'de'+str(1)
 print len(s)
 print s[0],s[-1]
+print s[:3] #first 3
+print s[-3:] #last 3
 ''']),
 
     ('8' , 
@@ -167,6 +169,18 @@ print a,b
 '''
 if __name__ == '__main__':
     print "hello world!"
+''']),
+
+    ('b' , 
+['Bottle: Python Web Framework',
+'''
+from bottle import route, run, template
+
+@route('/hello/<name>')
+def index(name='World'):
+    return template('<b>Hello {{name}}</b>!', name=name)
+
+run(host='localhost', port=8080)
 ''']),
 
     ('c' , 
@@ -262,11 +276,13 @@ def submit_record(what,verbose):
     if verbose: sys.stdout.write("apply for newpy ID...")
     newpyid=0
     try:
-        f = urllib2.urlopen("http://"+_newpy_server_+"/newpy", params, timeout=1)
+        f = urllib2.urlopen("http://"+_newpy_server_+"/newpy", params, timeout=10)
         newpyid=f.read()
         if verbose: print "ok, got",newpyid
+    #except urllib2.HTTPError, e:
+        #print e.reason
     except:
-        print "Unexpected error:", sys.exc_info()[0]
+        #print "Unexpected error:", sys.exc_info()[0]
         if verbose: print "ko, use 0"
 
     return newpyid
@@ -303,7 +319,7 @@ def main():
     parser.add_option("-s", "--samples", type="string", dest="sample_list", metavar="sample-id-list",
                       help='''select samples to include in the new file,
                       e.g. -s 123, check -l for all ids''',default="")
-    parser.add_option("-l", "--list_sample_id", action="callback", callback=list_sample)
+    parser.add_option("-l", "--list", help="list all the available samples.", action="callback", callback=list_sample)
     parser.add_option("-u", "--upload", type="string", dest="filename",
                       help='''upload file to newpy server as sample to others. the file must have a valid newpy ID.''',
                       action="callback", callback=upload_file)
