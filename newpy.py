@@ -3,7 +3,7 @@
 # DateTime: 2013-07-07 16:54:15
 # HomePage: https://github.com/jackandking/newpy
 
-__version__='0.7'
+__version__='0.8'
 
 '''Contributors:
     Yingjie.Liu@thomsonreuters.com
@@ -26,7 +26,7 @@ header='''# -*- coding: utf-8 -*-
 # Generator: https://github.com/jackandking/newpy
 # Newpy Version: %s
 # Newpy ID: %s
-# Description: I'm a lazy person.
+# Description: I'm a lazy person, so you have to figure out the function of this script by yourself.
 '''
 
 sample_blocks = dict([
@@ -138,6 +138,51 @@ print a,b
 '''
 if __name__ == '__main__':
     print "hello world!"
+''']),
+
+    ('a' , 
+['CSV read and write',
+r'''
+# http://www.pythonforbeginners.com/systems-programming/using-the-csv-module-in-python/
+
+#read
+import csv
+ 
+file=open("test.csv","w")
+file.write("a,b,c\n")
+file.write("1,2,3\n")
+file.write("11,12,13")
+file.close()
+
+ifile  = open('test.csv', "rb")
+reader = csv.reader(ifile)
+ 
+rownum = 0
+for row in reader:
+    # Save header row.
+    if rownum == 0:
+        header = row
+    else:
+        colnum = 0
+        for col in row:
+            print '%-8s: %s' % (header[colnum], col)
+            colnum += 1
+             
+    rownum += 1
+ 
+ifile.close()
+
+# write
+ifile  = open('test.csv', "rb")
+reader = csv.reader(ifile)
+ofile  = open('ttest.csv', "wb")
+writer = csv.writer(ofile, delimiter='\t', quotechar='"', quoting=csv.QUOTE_ALL)
+ 
+for row in reader:
+    writer.writerow(row)
+ 
+ifile.close()
+ofile.close()
 ''']),
 
     ('b' , 
