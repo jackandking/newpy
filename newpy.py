@@ -19,38 +19,6 @@ _newpy_server_='newxx.sinaapp.com'
 from datetime import datetime
 from optparse import OptionParser
 import sys,os
-import socket
-
-if os.name != "nt":
-    import fcntl
-    import struct
-
-    def get_interface_ip(ifname):
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        return socket.inet_ntoa(fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s',
-                                ifname[:15]))[20:24])
-
-def get_lan_ip():
-    ip = socket.gethostbyname(socket.gethostname())
-    if ip.startswith("127.") and os.name != "nt":
-        interfaces = [
-            "eth0",
-            "eth1",
-            "eth2",
-            "wlan0",
-            "wlan1",
-            "wifi0",
-            "ath0",
-            "ath1",
-            "ppp0",
-            ]
-        for ifname in interfaces:
-            try:
-                ip = get_interface_ip(ifname)
-                break
-            except IOError:
-                pass
-    return ip
 
 header='''# -*- coding: utf-8 -*-
 # Author: %s
@@ -58,6 +26,7 @@ header='''# -*- coding: utf-8 -*-
 # Generator: https://github.com/jackandking/newpy
 # Newpy Version: %s
 # Newpy ID: %s
+# Description: I'm a lazy person.
 '''
 
 sample_blocks = dict([
@@ -272,11 +241,11 @@ def list_sample(option, opt_str, value, parser):
 
 def submit_record(what,verbose):
     import urllib,urllib2
-    params = urllib.urlencode({'which': __version__, 'where': get_lan_ip(), 'who': _author_, 'what': what})
+    params = urllib.urlencode({'which': __version__, 'who': _author_, 'what': what})
     if verbose: sys.stdout.write("apply for newpy ID...")
     newpyid=0
     try:
-        f = urllib2.urlopen("http://"+_newpy_server_+"/newpy", params, timeout=10)
+        f = urllib2.urlopen("http://"+_newpy_server_+"/newpy", params, timeout=3)
         newpyid=f.read()
         if verbose: print "ok, got",newpyid
     #except urllib2.HTTPError, e:
@@ -306,7 +275,7 @@ def upload_file(option, opt_str, value, parser):
     import urllib,urllib2
     params = urllib.urlencode({'filename': filename, 'content': open(filename,'rb').read()})
     try:
-        f = urllib2.urlopen("http://"+_newpy_server_+"/newpy/upload", params, timeout=5)
+        f = urllib2.urlopen("http://"+_newpy_server_+"/newpy/upload", params, timeout=3)
         print f.read()
         print "weblink: http://"+_newpy_server_+"/newpy/"+str(newpyid)
     except:
