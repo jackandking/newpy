@@ -55,6 +55,8 @@ while not None:
 ['''List and Dict''',
 '''
 list=[1,3,2]; print list
+list.append(4); print list
+list.pop(); print list
 list_of_list=[1,2,[3,4]]; print list_of_list
 list_of_dict=[{"name":"jack", "sex":"M"},{"name":"king","sex":"M"}]; print list_of_dict
 dict={'yi':'one','san':'three','er':'two','array':['four','five']}; print dict
@@ -95,6 +97,7 @@ try:
     response=urllib2.urlopen("www.google.com")
     response=urllib2.urlopen("http://www.google.com")
     print response.read(); 
+    raise Exception("I know python!")
 except HTTPError, e:
     print 'The server couldn\'t fulfill the request.'
     print 'Error code: ', e.code
@@ -136,8 +139,26 @@ print a,b
     ('9' , 
 ['Unit Test',
 '''
+import unittest
+
+# Here's our "unit".
+def IsOdd(n):
+    return n % 2 == 1
+
+# Here's our "unit tests".
+class IsOddTests(unittest.TestCase):
+
+    def testOne(self):
+        self.failUnless(IsOdd(1))
+
+    def testTwo(self):
+        self.failIf(IsOdd(2))
+
+def main():
+    unittest.main()
+
 if __name__ == '__main__':
-    print "hello world!"
+    main()
 ''']),
 
     ('a' , 
@@ -256,6 +277,16 @@ post_id = posts.insert(post)
 posts.find_one({"author": "Mike"})
 for post in posts.find():
     post
+''']),
+
+    ('D' , 
+['PDB: python debug',
+'''
+# python -m pdb myscript.py
+import pdb
+i=1
+pdb.set_trace()
+print i
 ''']),
 
 ])
