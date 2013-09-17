@@ -311,8 +311,10 @@ def write_sample_to_file(newpy_id=0,
 
 def list_sample(option, opt_str, value, parser):
     print "Here are the available samples:"
+    print "---------------------------------------"
     for i in sorted(sample_blocks.iterkeys()):
         print i,"=>",sample_blocks[i][0]
+    print "---------------------------------------"
     sys.exit()
 
 def submit_record(what,verbose):
@@ -381,23 +383,27 @@ def main():
     parser.add_option("-n", "--norecord", help="don't submit record to improve newpy",
                       action="store_false", dest="record", default=True)
     (options, args) = parser.parse_args()
-    if len(args) != 1:
-        parser.error("incorrect number of arguments, try -h")
-
-    filename=args[0]+'.py'
-    if options.overwrite is None and os.path.isfile(filename): sys.exit("error: "+filename+" already exist!")
-
     verbose=options.verbose
     sample_list=options.sample_list
 
-    if options.record: newpy_id=submit_record(sample_list,verbose)
-    else: newpy_id=0
+    if options.test is None:
+        if len(args) != 1:
+            parser.error("incorrect number of arguments, try -h")
+
+        filename=args[0]+'.py'
+        if options.overwrite is None and os.path.isfile(filename): sys.exit("error: "+filename+" already exist!")
+
+        if options.record: newpy_id=submit_record(sample_list,verbose)
+        else: newpy_id=0
+    else:
+        newpy_id=0
+        filename=None
 
     write_sample_to_file(newpy_id=newpy_id,
                          id_list= sample_list,
-                         filename= None if options.test else filename,
+                         filename=filename,
                          comment=options.comment)
-    if verbose: print "generate",filename,"successfully."
+    if verbose and filename: print "generate",filename,"successfully."
 
 if __name__ == '__main__':
     main()
