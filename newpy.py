@@ -99,7 +99,7 @@ try:
     print response.read(); 
     raise Exception("I know python!")
 except HTTPError, e:
-    print 'The server couldn\'t fulfill the request.'
+    print 'The server could not fulfill the request.'
     print 'Error code: ', e.code
 except URLError, e:
     print 'We failed to reach a server.'
