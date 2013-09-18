@@ -19,6 +19,8 @@ _newpy_server_='newxx.sinaapp.com'
 from datetime import datetime
 from optparse import OptionParser
 import sys,os
+import socket
+socket.setdefaulttimeout(3)
 
 header='''# -*- coding: utf-8 -*-
 # Author: %s
@@ -323,7 +325,7 @@ def submit_record(what,verbose):
     if verbose: sys.stdout.write("apply for newpy ID...")
     newpyid=0
     try:
-        f = urllib2.urlopen("http://"+_newpy_server_+"/newpy", params, timeout=3)
+        f = urllib2.urlopen("http://"+_newpy_server_+"/newpy", params)
         newpyid=f.read()
         if verbose: print "ok, got",newpyid
     #except urllib2.HTTPError, e:
@@ -353,7 +355,7 @@ def upload_file(option, opt_str, value, parser):
     import urllib,urllib2
     params = urllib.urlencode({'filename': filename, 'content': open(filename,'rb').read()})
     try:
-        f = urllib2.urlopen("http://"+_newpy_server_+"/newpy/upload", params, timeout=3)
+        f = urllib2.urlopen("http://"+_newpy_server_+"/newpy/upload", params)
         print f.read()
         print "weblink: http://"+_newpy_server_+"/newpy/"+str(newpyid)
     except:
