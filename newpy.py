@@ -3,7 +3,7 @@
 # DateTime: 2013-07-07 16:54:15
 # HomePage: https://github.com/jackandking/newpy
 
-__version__='0.8'
+__version__='0.9'
 
 '''Contributors:
     Yingjie.Liu@thomsonreuters.com
@@ -19,6 +19,8 @@ _newpy_server_='newxx.sinaapp.com'
 from datetime import datetime
 from optparse import OptionParser
 import sys,os
+import urllib,urllib2
+import re
 import socket
 socket.setdefaulttimeout(3)
 
@@ -244,6 +246,10 @@ my_dict['a'][2] = 7
 print my_copy['a'][2]
 ''']),
 
+    ('e' , 
+['Inspect, print function parameter',
+'http://newxx.sinaapp.com/newpy/129']),
+
     ('f' , 
 ['Function and DataTime',
 '''
@@ -264,6 +270,38 @@ globals()[libname] = __import__(libname)
 mod=globals()[libname]
 if hasattr(mod,'sleep'):
     mod.sleep(1)
+''']),
+
+    ('l' , 
+['Logging, logger',
+'''
+#refer to http://docs.python.org/2/howto/logging.html
+
+import logging
+
+# create logger
+logger = logging.getLogger('simple_example')
+logger.setLevel(logging.DEBUG)
+
+# create console handler and set level to debug
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+
+# create formatter
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+# add formatter to ch
+ch.setFormatter(formatter)
+
+# add ch to logger
+logger.addHandler(ch)
+
+# 'application' code
+logger.debug('debug message')
+logger.info('info message')
+logger.warn('warn message')
+logger.error('error message')
+logger.critical('critical message')
 ''']),
 
     ('m' , 
@@ -293,6 +331,10 @@ print i
 
 ])
 
+def get_file_content(a_url):
+    response=urllib2.urlopen(a_url)
+    return response.read()[11:][:-13] 
+
 def write_sample_to_file(newpy_id=0,
                          id_list=None,
                          filename=None,
@@ -305,8 +347,12 @@ def write_sample_to_file(newpy_id=0,
         if i not in sample_blocks.iterkeys(): print "invalid sample ID, ignore",i; continue
         print >> file, ""
         if comment: print >> file, "'''"
-        print >> file, '#',sample_blocks[i][0]
-        print >> file, sample_blocks[i][1]
+        print >> file, '##',sample_blocks[i][0]
+        if sample_blocks[i][1][:5] == "http:":
+          print >> file, ""
+          print >> file, get_file_content(sample_blocks[i][1])
+        else:
+          print >> file, sample_blocks[i][1]
         if comment: print >> file, "'''"
         print >> file, ""
     if file != sys.stdout: file.close()
@@ -320,7 +366,6 @@ def list_sample(option, opt_str, value, parser):
     sys.exit()
 
 def submit_record(what,verbose):
-    import urllib,urllib2
     params = urllib.urlencode({'which': __version__, 'who': _author_, 'what': what})
     if verbose: sys.stdout.write("apply for newpy ID...")
     newpyid=0
@@ -337,7 +382,6 @@ def submit_record(what,verbose):
     return newpyid
  
 def upload_file(option, opt_str, value, parser):
-    import re
     filename=value
     if not os.path.isfile(filename): sys.exit("error: "+filename+" does not exist!")
     file=open(filename,"r")
@@ -352,7 +396,6 @@ def upload_file(option, opt_str, value, parser):
     file.close
     if newpyid == 0: sys.exit("error: no valid newpy ID found for "+filename)
     sys.stdout.write("uploading "+filename+"(newpyid="+str(newpyid)+")...")
-    import urllib,urllib2
     params = urllib.urlencode({'filename': filename, 'content': open(filename,'rb').read()})
     try:
         f = urllib2.urlopen("http://"+_newpy_server_+"/newpy/upload", params)
