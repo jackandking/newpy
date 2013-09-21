@@ -3,7 +3,7 @@
 # DateTime: 2013-07-07 16:54:15
 # HomePage: https://github.com/jackandking/newpy
 
-__version__='0.9'
+__version__='1.0'
 
 '''Contributors:
     Yingjie.Liu@thomsonreuters.com
@@ -152,6 +152,7 @@ def IsOdd(n):
 # Here's our "unit tests".
 class IsOddTests(unittest.TestCase):
 
+    #@unittest.skip('reason')
     def testOne(self):
         self.failUnless(IsOdd(1))
 
@@ -163,6 +164,9 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# To run one case, give IsOddTests.testOne as parameter when run the script
+
 ''']),
 
     ('a' , 
@@ -262,6 +266,10 @@ print isleap.__doc__
 print "this year is leap year:",isleap(thisyear)
 ''']),
 
+    ('h' , 
+['HTML2CSV',
+'http://newxx.sinaapp.com/newpy/135']),
+
     ('i' , 
 ['Runtime Import',
 '''
@@ -279,6 +287,11 @@ if hasattr(mod,'sleep'):
 
 import logging
 
+#simple use
+logging.basicConfig(format='%(levelname)s:%(message)s',level=logging.DEBUG)
+logging.debug('something')
+
+#advance use
 # create logger
 logger = logging.getLogger('simple_example')
 logger.setLevel(logging.DEBUG)
@@ -300,7 +313,7 @@ logger.addHandler(ch)
 logger.debug('debug message')
 logger.info('info message')
 logger.warn('warn message')
-logger.error('error message')
+logger.error('error message %s', 'something')
 logger.critical('critical message')
 ''']),
 
@@ -319,6 +332,12 @@ for post in posts.find():
     post
 ''']),
 
+    ('o' , 
+['Function overload',
+'''
+# no easy answer. refer to http://stackoverflow.com/questions/6434482/python-function-overloading
+''']),
+
     ('D' , 
 ['PDB: python debug',
 '''
@@ -332,8 +351,13 @@ print i
 ])
 
 def get_file_content(a_url):
+  try:
     response=urllib2.urlopen(a_url)
+    #for i in range(6):
+      #response.readline()
     return response.read()[11:][:-13] 
+  except:
+    return "#timeout, please refer to "+a_url
 
 def write_sample_to_file(newpy_id=0,
                          id_list=None,
@@ -438,11 +462,11 @@ def main():
         filename=args[0]+'.py'
         if options.overwrite is None and os.path.isfile(filename): sys.exit("error: "+filename+" already exist!")
 
-        if options.record: newpy_id=submit_record(sample_list,verbose)
-        else: newpy_id=0
     else:
-        newpy_id=0
         filename=None
+
+    if options.record: newpy_id=submit_record(sample_list,verbose)
+    else: newpy_id=0
 
     write_sample_to_file(newpy_id=newpy_id,
                          id_list= sample_list,
