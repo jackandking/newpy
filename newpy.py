@@ -3,7 +3,7 @@
 # DateTime: 2013-07-07 16:54:15
 # HomePage: https://github.com/jackandking/newpy
 
-__version__='1.0'
+__version__='1.1'
 
 '''Contributors:
     Yingjie.Liu@thomsonreuters.com
@@ -336,6 +336,24 @@ for post in posts.find():
 ['Function overload',
 '''
 # no easy answer. refer to http://stackoverflow.com/questions/6434482/python-function-overloading
+''']),
+
+    ('C' , 
+['Http cookie, session',
+'''
+# refer to http://stackoverflow.com/questions/189555/how-to-use-python-to-login-to-a-webpage-and-retrieve-cookies-for-later-usage
+
+import urllib, urllib2, cookielib
+
+username = 'myuser'
+password = 'mypassword'
+
+cj = cookielib.CookieJar()
+opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+login_data = urllib.urlencode({'username' : username, 'j_password' : password})
+opener.open('http://www.example.com/login.php', login_data)
+resp = opener.open('http://www.example.com/hiddenpage.php')
+print resp.read()
 ''']),
 
     ('D' , 
