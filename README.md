@@ -17,10 +17,16 @@ Python is powerful only because there are lots of useful modules. They are free 
 
 For our sake, Christoph Gohlke prepares Windows installers (.msi) for popular Python packages. He builds installers for Python 2.x and 3.x, 32 bit and 64 bit. You need to
 
-Install setuptools http://www.lfd.uci.edu/~gohlke/pythonlibs/#setuptools <br>
-Install pip http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip
-
+Install setuptools: 
+    curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python
+For manual install inside setuptools:
+    setup.py install
+Install pip:
+    easy_install pip
+Install Module with pip: 
     pip install <module>
+
+Install from Binary: http://www.lfd.uci.edu/~gohlke/pythonlibs/#setuptoo
 
 
 Install newpy.py

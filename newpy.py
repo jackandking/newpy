@@ -3,7 +3,7 @@
 # DateTime: 2013-07-07 16:54:15
 # HomePage: https://github.com/jackandking/newpy
 
-__version__='1.1'
+__version__='1.2'
 
 '''Contributors:
     Yingjie.Liu@thomsonreuters.com
@@ -22,7 +22,7 @@ import sys,os
 import urllib,urllib2
 import re
 import socket
-socket.setdefaulttimeout(3)
+socket.setdefaulttimeout(13)
 
 header='''# -*- coding: utf-8 -*-
 # Author: %s
@@ -86,6 +86,7 @@ file.close
     ('4' , 
 ['''Regular Expression''',
 '''
+# http://docs.python.org/2/howto/regex.html
 import re
 line='abc123abc'
 m=re.search('(\d+)',line)
@@ -144,28 +145,22 @@ print a,b
 ['Unit Test',
 '''
 import unittest
+import logging
+logging.basicConfig(format='%(levelname)s:%(message)s',level=logging.DEBUG)
 
-# Here's our "unit".
-def IsOdd(n):
-    return n % 2 == 1
 
-# Here's our "unit tests".
-class IsOddTests(unittest.TestCase):
 
-    #@unittest.skip('reason')
-    def testOne(self):
-        self.failUnless(IsOdd(1))
+class _UT(unittest.TestCase):
 
-    def testTwo(self):
-        self.failIf(IsOdd(2))
+    @unittest.skip('not ready')
+    def test1(self):
+        self.failUnless(1)
 
 def main():
-    unittest.main()
+    unittest.main(verbosity=2)
 
 if __name__ == '__main__':
     main()
-
-# To run one case, give IsOddTests.testOne as parameter when run the script
 
 ''']),
 
@@ -355,6 +350,18 @@ opener.open('http://www.example.com/login.php', login_data)
 resp = opener.open('http://www.example.com/hiddenpage.php')
 print resp.read()
 ''']),
+
+    ('A' , 
+['SelfMgr: urllib2 proxy, State Design Pattern',
+'http://newxx.sinaapp.com/newpy/180']),
+
+    ('B' , 
+['Mysql, escape_string',
+'http://newxx.sinaapp.com/newpy/131']),
+
+    ('C' , 
+['aggregate history: glob, list files',
+'http://newxx.sinaapp.com/newpy/183']),
 
     ('D' , 
 ['PDB: python debug',
