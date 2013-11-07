@@ -373,6 +373,10 @@ pdb.set_trace()
 print i
 ''']),
 
+    ('E' , 
+['count_CVATDed_feature4CVA: whole file read, findall multiline, uniq list',
+'http://newxx.sinaapp.com/newpy/185']),
+
 ])
 
 def get_file_content(a_url):
