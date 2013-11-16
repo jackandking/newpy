@@ -10,7 +10,7 @@ __version__='1.2'
 '''
 
 # Configuration Area Start for users of newpy
-_author_ = 'Yingjie.Liu@thomsonreuters.com'
+_author_ = 'yingjil@amazon.com'
 # Configuration Area End
 
 _newpy_server_='newxx.sinaapp.com'
