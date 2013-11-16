@@ -37,6 +37,9 @@ Download newpy.py from GitHub to your local disk. Edit newpy.py with any text ed
     _author_ ='Yingjie.Liu@thomsonreuters.com'
     # Configuration Area End
 
+Or use curl and install it to c:\bin in windows:
+    curl http://newxx.sinaapp.com/newpy/raw/186 |python
+
 Usage
 -----
 
