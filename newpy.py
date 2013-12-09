@@ -377,6 +377,10 @@ print i
 ['count_CVATDed_feature4CVA: whole file read, findall multiline, uniq list',
 'http://newxx.sinaapp.com/newpy/185']),
 
+    ('F' , 
+['get_obj:exec',
+'http://newxx.sinaapp.com/newpy/206']),
+
 ])
 
 def get_file_content(a_url):
