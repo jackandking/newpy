@@ -389,6 +389,10 @@ print i
 ['install both',
 'http://newxx.sinaapp.com/newpy/210']),
 
+    ('I' , 
+['get path both',
+'http://newxx.sinaapp.com/newpy/209']),
+
 ])
 
 def get_file_content(a_url):
