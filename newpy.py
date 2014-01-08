@@ -381,6 +381,14 @@ print i
 ['get_obj:exec',
 'http://newxx.sinaapp.com/newpy/206']),
 
+    ('G' , 
+['install windows only',
+'http://newxx.sinaapp.com/newpy/205']),
+
+    ('H' , 
+['install both',
+'http://newxx.sinaapp.com/newpy/210']),
+
 ])
 
 def get_file_content(a_url):
